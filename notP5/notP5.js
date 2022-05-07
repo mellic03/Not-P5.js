@@ -1,27 +1,3 @@
-var canvas;
-var ctx;
-function createCanvas(w, h) {
-    // Set global width/height
-    width = w;
-    height = h;
-    var container = document.createElement('div');
-    container.id = "container";
-    canvas = document.createElement('canvas');
-    canvas.id = "canvas2";
-    canvas.width = w;
-    canvas.height = h;
-    container.appendChild(canvas);
-    document.body.appendChild(container);
-    ctx = canvas.getContext("2d");
-}
-// Setup function
-setup();
-// Draw function
-function gameLoop() {
-    draw();
-    window.requestAnimationFrame(gameLoop);
-}
-window.requestAnimationFrame(gameLoop);
 // SHAPE GEOMETRIES
 /**
  * Draws a rectangle at position x, y with width w and height h.
@@ -169,8 +145,8 @@ function noFill() {
 }
 function stroke(r, g, b, a) {
     if (r === void 0) { r = 0; }
-    if (g === void 0) { g = 0; }
-    if (b === void 0) { b = 0; }
+    if (g === void 0) { g = r; }
+    if (b === void 0) { b = r; }
     if (a === void 0) { a = 1; }
     no_stroke = false;
     // Set global stroke color
@@ -183,6 +159,10 @@ function noStroke() {
 function strokeWeight(w) {
     ctx.lineWidth = w;
 }
+var width;
+var height;
+var canvas;
+var ctx;
 // Shapes
 var rect_mode = 'CORNER';
 var ellipse_mode = 'CENTER';
@@ -192,17 +172,22 @@ var stroke_weight = 1;
 var no_stroke = false;
 var fill_color = [0, 0, 0, 1];
 var no_fill = false;
-var width;
-var height;
-function setup() {
-    createCanvas(500, 500);
+function createCanvas(w, h) {
+    canvas = document.createElement('canvas');
+    ctx = canvas.getContext("2d");
+    document.body.appendChild(canvas);
+    width = canvas.width = w;
+    height = canvas.height = h;
 }
-function draw() {
-    backGround(200, 200, 200, 1);
-    noStroke();
-    fill(200, 0, 0);
-    rect(100, 100, 150, 200);
-    fill(0, 255, 0);
-    circle(250, 250, 50);
-    stroke(0);
+var draw;
+var setup;
+// Execute setup function
+if (typeof setup === "function") {
+    setup();
 }
+// Draw function
+function gameLoop() {
+    draw();
+    window.requestAnimationFrame(gameLoop);
+}
+window.requestAnimationFrame(gameLoop);

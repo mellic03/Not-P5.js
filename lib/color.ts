@@ -17,7 +17,7 @@ function backGround(r:number, g:number = r, b:number = r, a:number = 1) {
     fill(fill_color[0], fill_color[1], fill_color[2]);
 }
 
-function fill(r = 0, g:number = undefined, b:number = undefined, a = 1) {
+function fill(r:number = 0, g:number = undefined, b:number = undefined, a = 1) {
     // Set global fill color
     fill_color = [r, g, b, a];
 
@@ -34,7 +34,7 @@ function noFill() {
     ctx.fillStyle = `rgba(0, 0, 0, 1)`;
 }
 
-function stroke(r = 0, g = 0, b = 0, a = 1) {
+function stroke(r:number = 0, g:number = r, b:number = r, a:number = 1) {
     no_stroke = false;
     // Set global stroke color
     stroke_color = [r, g, b, a];
