@@ -1,0 +1,19 @@
+{
+  "include": [
+    "./sketch.js"
+  ],
+
+  "compilerOptions": {
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "out": "notP5/notP5.js",
+    "allowJs": true,
+  },
+
+  "files": [
+    "./lib/main.ts",
+    "./lib/shapes.ts",
+    "./lib/color.ts",
+    "./lib/globals.ts"
+  ]
+}

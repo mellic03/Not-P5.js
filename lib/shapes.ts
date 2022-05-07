@@ -1,6 +1,15 @@
 // SHAPE GEOMETRIES
 
-function rect(x, y, w, h) {
+
+/**
+ * Draws a rectangle at position x, y with width w and height h.
+ * @param {number} x - x coordinate.
+ * @param {number} y - y coordinate.
+ * @param {number} w - width.
+ * @param {number} h - height.
+ * @returns {void} undefined
+ */
+function rect(x:number, y:number, w:number, h:number) {
     if (!no_fill && !no_stroke) {
         if (rect_mode == 'CORNER') {
             ctx.fillRect(x, y, w, h);
@@ -39,7 +48,13 @@ function rect(x, y, w, h) {
     }
 }
 
-function circle(x, y, r) {
+/**
+ * Draws a circle at position x, y with radius r.
+ * @param {number} x - x coordinate.
+ * @param {number} y - y coordinate.
+ * @param {number} r - radius.
+ */
+function circle(x:number, y:number, r:number) {
     if (!no_fill && !no_stroke) {
         if (ellipse_mode == "CENTER") {
             ctx.beginPath();
@@ -64,17 +79,24 @@ function circle(x, y, r) {
     }
 }
 
-function line(x1, y1, x2, y2) {
+/**
+ * Draws a line between (x1, y1) and (x2, y2).
+ * @param {number} x1 - First x coordinate.
+ * @param {number} y1 - First y coordinate.
+ * @param {number} x2 - Second x coordinate.
+ * @param {number} y2 - Second y coordinate.
+ * @returns {void} undefined
+ */
+function line(x1:number, y1:number, x2:number, y2:number) {
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
 }
 
-
 // SHAPE CONFIGURATIONS
 
-function rectMode(mode) {
+function rectMode(mode:string) {
     if (mode == 'CORNER' || mode == 'CORNERS' || mode == 'CENTER') {
         rect_mode = mode;
     }
@@ -83,7 +105,7 @@ function rectMode(mode) {
     }
 }
 
-function ellipseMode(mode) {
+function ellipseMode(mode:string) {
     if (mode == 'CENTER' || mode == 'CORNER') {
         rect_mode = mode;
     }
