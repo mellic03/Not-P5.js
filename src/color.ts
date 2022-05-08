@@ -16,17 +16,10 @@ function backGround(r:number, g:number = r, b:number = r, a:number = 1) {
     fill(fill_color[0], fill_color[1], fill_color[2]);
 }
 
-function fill(r:number = 0, g:number = undefined, b:number = undefined, a = 1) {
+function fill(r:number = 0, g:number = r, b:number = r, a = 1) {
     // Set global fill color
     fill_color = [r, g, b, a];
-
-    if (b != undefined) {
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
-    }
-
-    else {
-        ctx.fillStyle = `rgba(${r}, 0, 0, 1)`;
-    }
+    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
 function noFill() {

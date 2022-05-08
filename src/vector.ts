@@ -25,12 +25,13 @@ class Vector {
     }
 
     /** Addition of vectors
-     * - let v3 = v1.add(v2);
      * 
      * @returns nothing
      */
     add(vect:Vector) {
-        return ( new Vector(this.x + vect.x, this.y + vect.y, this.z + vect.z) );
+        this.x += vect.x;
+        this.y += vect.y;
+        this.z += vect.z;
     }
 
     /** Subtraction of vectors
@@ -85,6 +86,10 @@ class Vector {
      */
     magSq() {
         return(this.x**2 + this.y**2 + this.z**2);
+    }
+
+    dot(vect:Vector) {
+        
     }
 
 }
