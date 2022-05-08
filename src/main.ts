@@ -1,8 +1,7 @@
-
 let width:number;
 let height:number;
 
-let canvas:HTMLCanvasElement;
+let canvas;
 let ctx:CanvasRenderingContext2D;
 
 
@@ -23,9 +22,8 @@ let no_fill:boolean = false;
 
 
 function createCanvas(w:number, h:number) {
-    canvas = document.createElement('canvas');
-    ctx = canvas.getContext("2d");
-    document.body.appendChild(canvas);
+    canvas = document.getElementById("canvas")
+    ctx =  canvas.getContext('2d');
 
     width = canvas.width = w;
     height = canvas.height = h;
@@ -33,6 +31,7 @@ function createCanvas(w:number, h:number) {
 
 let draw:Function;
 let setup:Function;
+
 
 // Execute setup function
 setup();

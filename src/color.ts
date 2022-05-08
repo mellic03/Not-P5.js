@@ -1,4 +1,3 @@
-
 /**
  *  Accepts these formats:
  *  - grayscale(amount)

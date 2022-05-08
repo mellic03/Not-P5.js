@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "out": "notP5/notP5.js",
+    "out": "./lib/notP5.js",
     "allowJs": true,
   },
 
   "files": [
-    "./lib/shapes.ts",
-    "./lib/color.ts",
-    "./lib/main.ts",
+    "./src/shapes.ts",
+    "./src/color.ts",
+    "./src/vector.ts",
+
+    "./src/main.ts",
   ]
 }
