@@ -71,6 +71,22 @@ class Vector {
         this.z /= scalar;
     }
 
+    /** Return magnitude of a vector
+     * 
+     * @returns number
+     */
+    mag() {
+        return(Math.sqrt((this.x**2 + this.y**2 + this.z**2)));
+    }
+
+    /** Return squared magnitude of a vector
+     * 
+     * @returns number
+     */
+    magSq() {
+        return(this.x**2 + this.y**2 + this.z**2);
+    }
+
 }
 
 
