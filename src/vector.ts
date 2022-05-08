@@ -51,6 +51,26 @@ class Vector {
         }
     }
 
+    /** Multiplication of vector by a scalar
+     * 
+     * @returns nothing
+     */
+    mult(scalar:number) {
+        this.x *= scalar;
+        this.y *= scalar;
+        this.z *= scalar;
+    }
+
+    /** Division of vector by a scalar
+     * 
+     * @returns nothing
+     */
+    div(scalar:number) {
+        this.x /= scalar;
+        this.y /= scalar;
+        this.z /= scalar;
+    }
+
 }
 
 
