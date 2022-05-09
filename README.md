@@ -6,7 +6,7 @@ This exists solely as practice and is not worth using over the real P5.js.
 <strong>Really, don't use this.</strong>
 
 ## Build Instructions
-The transpiled TypeScript is already provided in /lib/notP5.js but can still be built using the TypeScript in /src.
+The transpiled TypeScript is already provided in example/lib/notP5.js but can still be built using the TypeScript in /src.
 
 1. Install the TypeScript Compiler:
 ```bash
