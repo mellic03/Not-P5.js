@@ -461,8 +461,8 @@ var draw;
 var setup;
 // Execute setup function
 setup();
-// Draw function
 function renderLoop() {
+    // Draw
     draw();
     // Reset translation.
     translate(-translated_x, -translated_y);
