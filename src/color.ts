@@ -16,14 +16,22 @@ function background(r:number, g:number = r, b:number = r, a:number = 1) {
     ctx.fillStyle = fill_color;
 }
 
-function fill(r:number = 0, g:number = r, b:number = r, a = 255) {
-    // Set global fill color
-    fill_color = `rgba(${r}, ${g}, ${b}, ${a})`;
-    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+function fill(r:number, g:number = r, b:number = r, a = 255) {
+    
+    if (typeof r === "string") {
+        ctx.fillStyle = r;
+    }
+    
+    else {
+        // Set global fill color
+        fill_color = `rgba(${r}, ${g}, ${b}, ${a})`;
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+    }
+
 }
 
 function noFill() {
-    ctx.fillStyle = `rgba(0, 0, 0, 1)`;
+    ctx.fillStyle = `rgba(0, 0, 0, 0)`;
 }
 
 function stroke(r:number = 0, g:number = r, b:number = r, a:number = 255) {

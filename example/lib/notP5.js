@@ -9,6 +9,10 @@ var frame_rate = 60;
 // Translate by negative this amount at the end of the loop.
 var translated_x = 0;
 var translated_y = 0;
+// Rotation
+// Keep track of how much the user has rotated the canvas.
+// Rotate by negative this amount at the end of the loop.
+var rotated = 0;
 // Text
 var current_font_size = 20;
 var current_font = "Arial";
@@ -24,7 +28,7 @@ var ellipse_mode = 'CENTER';
 var stroke_color = "rgba(0, 0, 0, 1)";
 var stroke_weight = 1;
 var no_stroke = false;
-var fill_color = "rgba(0, 0, 0, 1)";
+var fill_color = "rgba(255, 255, 255, 1)";
 var no_fill = false;
 // Math
 var DEGREES = 'DEGREES';
@@ -33,52 +37,82 @@ var angle_modes = [DEGREES, RADIANS];
 var angle_mode = RADIANS; // Defualt angleMode is RADIANS.
 var PI = Math.PI;
 // SHAPE GEOMETRIES
+function arc(x, y, width, height, start, end, counterclockwise) {
+    if (counterclockwise === void 0) { counterclockwise = false; }
+    height = height / 2;
+    width = width / 2;
+    translate(x, y);
+    ctx.scale(1, height / width);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    if (angle_mode == RADIANS) {
+        ctx.arc(0, 0, width, start, end);
+    }
+    else if (angle_mode == DEGREES) {
+        ctx.arc(0, 0, width, start * (PI / 180), end * (PI / 180));
+    }
+    ctx.closePath();
+    if (!no_fill && !no_stroke) {
+        ctx.fill();
+        ctx.stroke();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
+    }
+    ctx.scale(1, width / height);
+    translate(-x, -y);
+}
 /**
  * Draws a rectangle at position x, y with width w and height h.
  * @param {number} x - x coordinate.
  * @param {number} y - y coordinate.
  * @param {number} w - width.
  * @param {number} h - height.
- * @returns {void} undefined
+ * @returns {void} nothing
  */
 function rect(x, y, w, h) {
+    ctx.beginPath();
+    if (rect_mode == "CORNER") {
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + w, y);
+        ctx.lineTo(x + w, y + h);
+        ctx.lineTo(x, y + h);
+    }
+    else if (rect_mode == "CENTER") {
+        ctx.moveTo(x - w / 2, y - h / 2);
+        ctx.lineTo(x + w / 2, y - h / 2);
+        ctx.lineTo(x + w / 2, y + h / 2);
+        ctx.lineTo(x - w / 2, y + h / 2);
+    }
+    else if (rect_mode == "CORNERS") {
+        ctx.moveTo(x, y);
+        ctx.lineTo(w, y);
+        ctx.lineTo(w, h);
+        ctx.lineTo(x, h);
+    }
+    ctx.closePath();
     if (!no_fill && !no_stroke) {
-        if (rect_mode == 'CORNER') {
-            ctx.fillRect(x, y, w, h);
-            ctx.strokeRect(x, y, w, h);
-        }
-        else if (rect_mode == 'CORNERS') {
-            ctx.fillRect(x, y, w - x, h - y);
-            ctx.strokeRect(x, y, w - x, h - y);
-        }
-        else if (rect_mode == 'CENTER') {
-            ctx.fillRect(x - w / 2, y - h / 2, w, h);
-            ctx.strokeRect(x - w / 2, y - h / 2, w, h);
-        }
+        ctx.fill();
+        ctx.stroke();
     }
     else if (no_fill && !no_stroke) {
-        if (rect_mode == 'CORNER') {
-            ctx.strokeRect(x, y, w, h);
-        }
-        else if (rect_mode == 'CORNERS') {
-            ctx.strokeRect(x, y, w - x, h - y);
-        }
-        else if (rect_mode == 'CENTER') {
-            ctx.strokeRect(x - w / 2, y - h / 2, w, h);
-        }
+        ctx.stroke();
     }
     else if (!no_fill && no_stroke) {
-        if (rect_mode == 'CORNER') {
-            ctx.fillRect(x, y, w, h);
-        }
-        else if (rect_mode == 'CORNERS') {
-            ctx.fillRect(x, y, w - x, h - y);
-        }
-        else if (rect_mode == 'CENTER') {
-            ctx.fillRect(x - w / 2, y - h / 2, w, h);
-        }
+        ctx.fill();
     }
 }
+/**
+ * Draws a square at position x, y with width w and border radius r.
+ * @param {number} x - x coordinate.
+ * @param {number} y - y coordinate.
+ * @param {number} w - width.
+ * @param {number} r - border radius.
+ * @returns {void} nothing
+ */
 function square(x, y, w, r) {
     if (r === void 0) { r = 0; }
     if (rect_mode == 'CORNER') {
@@ -99,6 +133,25 @@ function square(x, y, w, r) {
         ctx.arcTo(x - w / 2, y - w / 2, x - w / 2 + w, y - w / 2, r);
         ctx.fill();
         ctx.stroke();
+    }
+}
+function quad(x1, y1, x2, y2, x3, y3, x4, y4) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x3, y3);
+    ctx.lineTo(x4, y4);
+    ctx.lineTo(x1, y1);
+    ctx.closePath;
+    if (!no_fill && !no_stroke) {
+        ctx.stroke();
+        ctx.fill();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
     }
 }
 /**
@@ -176,7 +229,16 @@ function triangle(x1, y1, x2, y2, x3, y3) {
     ctx.lineTo(x2, y2);
     ctx.lineTo(x3, y3);
     ctx.lineTo(x1, y1);
-    ctx.stroke();
+    if (!no_fill && !no_stroke) {
+        ctx.fill();
+        ctx.stroke();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
+    }
 }
 // SHAPE CONFIGURATIONS
 function rectMode(mode) {
@@ -216,16 +278,20 @@ function background(r, g, b, a) {
     ctx.fillStyle = fill_color;
 }
 function fill(r, g, b, a) {
-    if (r === void 0) { r = 0; }
     if (g === void 0) { g = r; }
     if (b === void 0) { b = r; }
     if (a === void 0) { a = 255; }
-    // Set global fill color
-    fill_color = "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
-    ctx.fillStyle = "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a / 255, ")");
+    if (typeof r === "string") {
+        ctx.fillStyle = r;
+    }
+    else {
+        // Set global fill color
+        fill_color = "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");
+        ctx.fillStyle = "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a / 255, ")");
+    }
 }
 function noFill() {
-    ctx.fillStyle = "rgba(0, 0, 0, 1)";
+    ctx.fillStyle = "rgba(0, 0, 0, 0)";
 }
 function stroke(r, g, b, a) {
     if (r === void 0) { r = 0; }
@@ -380,35 +446,35 @@ function sqrt(x) {
     return (Math.sqrt(x));
 }
 function sin(angle) {
-    if (angle_mode == DEGREES) {
-        return (Math.sin(angle * (PI / 180)));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return (Math.sin(angle));
+    }
+    else if (angle_mode == DEGREES) {
+        return (Math.sin(angle * (PI / 180)));
     }
 }
 function cos(angle) {
-    if (angle_mode == DEGREES) {
-        return (Math.cos(angle * (PI / 180)));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return (Math.cos(angle));
+    }
+    else if (angle_mode == DEGREES) {
+        return (Math.cos(angle * (PI / 180)));
     }
 }
 function tan(angle) {
-    if (angle_mode == DEGREES) {
-        return (Math.tan(angle * (PI / 180)));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return (Math.tan(angle));
+    }
+    else if (angle_mode == DEGREES) {
+        return (Math.tan(angle * (PI / 180)));
     }
 }
 function atan2(x, y) {
-    if (angle_mode == DEGREES) {
-        return (Math.atan2(x, y) * (180 / PI));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return (Math.atan2(x, y));
+    }
+    else if (angle_mode == DEGREES) {
+        return (Math.atan2(x, y) * (180 / PI));
     }
 }
 function angleMode(mode) {
@@ -447,6 +513,20 @@ function translate(x, y) {
     translated_y += y;
     ctx.translate(x, y);
 }
+/** Rotate the canvas
+ *
+ * @param r amount (degrees for DEGREES mode, radians for RADIANS mode)
+ *
+ */
+function rotate(r) {
+    rotated += r;
+    if (angle_mode == DEGREES) {
+        ctx.rotate(r * (PI / 180));
+    }
+    else if (angle_mode == RADIANS) {
+        ctx.rotate(r);
+    }
+}
 function createCanvas(w, h) {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext('2d');
@@ -464,6 +544,8 @@ setup();
 function renderLoop() {
     // Draw
     draw();
+    // Reset rotation.
+    rotate(-rotated);
     // Reset translation.
     translate(-translated_x, -translated_y);
     setTimeout(function () {

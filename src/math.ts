@@ -34,38 +34,39 @@ function sqrt(x:number) {
 }
 
 function sin(angle:number) {
-    if (angle_mode == DEGREES) {
-        return(Math.sin(angle * (PI/180)));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return(Math.sin(angle));
+    }
+    else if (angle_mode == DEGREES) {
+        return(Math.sin(angle * (PI/180)));
     }
 }
 
+
 function cos(angle:number) {
-    if (angle_mode == DEGREES) {
-        return(Math.cos(angle * (PI/180)));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return(Math.cos(angle));
+    }
+    else if (angle_mode == DEGREES) {
+        return(Math.cos(angle * (PI/180)));
     }
 }
 
 function tan(angle:number) {
-    if (angle_mode == DEGREES) {
-        return(Math.tan(angle * (PI/180)));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return(Math.tan(angle));
+    }
+    else if (angle_mode == DEGREES) {
+        return(Math.tan(angle * (PI/180)));
     }
 }
 
 function atan2(x:number, y:number) {
-    if (angle_mode == DEGREES) {
-        return(Math.atan2(x, y) * (180/PI));
-    }
-    else if (angle_mode == RADIANS) {
+    if (angle_mode == RADIANS) {
         return(Math.atan2(x, y));
+    }
+    else if (angle_mode == DEGREES) {
+        return(Math.atan2(x, y) * (180/PI));
     }
 }
 

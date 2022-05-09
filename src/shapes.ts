@@ -1,5 +1,37 @@
 // SHAPE GEOMETRIES
 
+function arc(x:number, y:number, width:number, height:number, start:number, end:number, counterclockwise:boolean = false) {
+    
+    height = height / 2;
+    width = width / 2;
+
+    translate(x, y);
+    ctx.scale(1, height/width);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+
+    if (angle_mode == RADIANS) {
+        ctx.arc(0, 0, width, start, end);
+    }
+    else if (angle_mode == DEGREES) {
+        ctx.arc(0, 0, width, start * (PI/180), end * (PI/180));
+    }
+
+    ctx.closePath();
+
+    if (!no_fill && !no_stroke) {
+        ctx.fill();
+        ctx.stroke();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
+    }
+    ctx.scale(1, width/height);
+    translate(-x, -y);
+}
 
 /**
  * Draws a rectangle at position x, y with width w and height h.
@@ -7,47 +39,53 @@
  * @param {number} y - y coordinate.
  * @param {number} w - width.
  * @param {number} h - height.
- * @returns {void} undefined
+ * @returns {void} nothing
  */
 function rect(x:number, y:number, w:number, h:number) {
+    ctx.beginPath();
+
+    if (rect_mode == "CORNER") {
+        ctx.moveTo(x, y);
+        ctx.lineTo(x+w, y);
+        ctx.lineTo(x+w, y+h);
+        ctx.lineTo(x, y+h);
+    }
+    else if (rect_mode == "CENTER") {
+        ctx.moveTo(x-w/2, y-h/2);
+        ctx.lineTo(x+w/2, y-h/2);
+        ctx.lineTo(x+w/2, y+h/2);
+        ctx.lineTo(x-w/2, y+h/2);
+    }
+    else if (rect_mode == "CORNERS") {
+        ctx.moveTo(x, y);
+        ctx.lineTo(w, y); 
+        ctx.lineTo(w, h); 
+        ctx.lineTo(x, h); 
+    }
+
+    ctx.closePath();
+
     if (!no_fill && !no_stroke) {
-        if (rect_mode == 'CORNER') {
-            ctx.fillRect(x, y, w, h);
-            ctx.strokeRect(x, y, w, h);
-        }
-        else if (rect_mode == 'CORNERS') {
-            ctx.fillRect(x, y, w-x, h-y);
-            ctx.strokeRect(x, y, w-x, h-y);
-        }
-        else if (rect_mode == 'CENTER') {
-            ctx.fillRect(x-w/2, y-h/2, w, h);
-            ctx.strokeRect(x-w/2, y-h/2, w, h);
-        }
+        ctx.fill();
+        ctx.stroke();
     }
     else if (no_fill && !no_stroke) {
-        if (rect_mode == 'CORNER') {
-            ctx.strokeRect(x, y, w, h);
-        }
-        else if (rect_mode == 'CORNERS') {
-            ctx.strokeRect(x, y, w-x, h-y)
-        }
-        else if (rect_mode == 'CENTER') {
-            ctx.strokeRect(x-w/2, y-h/2, w, h);
-        }
+        ctx.stroke();
     }
     else if (!no_fill && no_stroke) {
-        if (rect_mode == 'CORNER') {
-            ctx.fillRect(x, y, w, h);
-        }
-        else if (rect_mode == 'CORNERS') {
-            ctx.fillRect(x, y, w-x, h-y);
-        }
-        else if (rect_mode == 'CENTER') {
-            ctx.fillRect(x-w/2, y-h/2, w, h);
-        }
+        ctx.fill();
     }
+
 }
 
+/**
+ * Draws a square at position x, y with width w and border radius r.
+ * @param {number} x - x coordinate.
+ * @param {number} y - y coordinate.
+ * @param {number} w - width.
+ * @param {number} r - border radius.
+ * @returns {void} nothing
+ */
 function square(x:number, y:number, w:number, r:number = 0) {
     if (rect_mode == 'CORNER') {
         ctx.beginPath();
@@ -67,6 +105,27 @@ function square(x:number, y:number, w:number, r:number = 0) {
         ctx.arcTo(x-w/2,   y-w/2,   x-w/2+w, y-w/2,   r);
         ctx.fill();
         ctx.stroke();
+    }
+}
+
+function quad(x1:number, y1:number, x2:number, y2:number, x3:number, y3:number, x4:number, y4:number) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x3, y3);
+    ctx.lineTo(x4, y4);
+    ctx.lineTo(x1, y1);
+    ctx.closePath
+    
+    if (!no_fill && !no_stroke) {
+        ctx.stroke();
+        ctx.fill();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
     }
 }
 
@@ -147,7 +206,17 @@ function triangle(x1:number, y1:number, x2:number, y2:number, x3:number, y3:numb
     ctx.lineTo(x2, y2);
     ctx.lineTo(x3, y3);
     ctx.lineTo(x1, y1);
-    ctx.stroke();
+    
+    if (!no_fill && !no_stroke) {
+        ctx.fill();
+        ctx.stroke();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
+    }
 }
 
 // SHAPE CONFIGURATIONS

@@ -30,3 +30,19 @@ function translate(x:number, y:number) {
     translated_y += y;
     ctx.translate(x, y);
 }
+
+
+/** Rotate the canvas
+ * 
+ * @param r amount (degrees for DEGREES mode, radians for RADIANS mode)
+ * 
+ */
+function rotate(r:number) {
+    rotated += r;
+    if (angle_mode == DEGREES) {
+        ctx.rotate(r * (PI/180));
+    }
+    else if (angle_mode == RADIANS) {
+        ctx.rotate(r);
+    }
+}

@@ -19,10 +19,13 @@ let setup:Function;
 setup();
 
 function renderLoop() {
-    
+
     // Draw
     draw();
-    
+
+    // Reset rotation.
+    rotate(-rotated);
+
     // Reset translation.
     translate(-translated_x, -translated_y);
 

@@ -13,6 +13,10 @@ let frame_rate:number = 60;
 let translated_x:number = 0;
 let translated_y:number = 0;
 
+// Rotation
+// Keep track of how much the user has rotated the canvas.
+// Rotate by negative this amount at the end of the loop.
+let rotated:number = 0;
 
 // Text
 let current_font_size:number = 20;
@@ -36,7 +40,7 @@ let stroke_weight:number = 1;
 
 let no_stroke:boolean = false;
 
-let fill_color:string = `rgba(0, 0, 0, 1)`;
+let fill_color:string = `rgba(255, 255, 255, 1)`;
 
 let no_fill:boolean = false;
 
