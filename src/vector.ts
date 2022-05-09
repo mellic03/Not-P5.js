@@ -88,6 +88,11 @@ class Vector {
         return(this.x**2 + this.y**2 + this.z**2);
     }
 
+    /** Return dot product of two vectors
+     * 
+     * v1.dot(v2);
+     * @returns vector
+     */
     dot(vect:Vector) {
         
     }

@@ -1,13 +1,16 @@
 {
   "compilerOptions": {
-    "out": "./lib/notP5.js",
+    "out": "./example/lib/notP5.js",
     "allowJs": true,
   },
 
   "files": [
+    "./src/globals.ts",
     "./src/shapes.ts",
     "./src/color.ts",
     "./src/vector.ts",
+    "./src/math.ts",
+    "./src/canvas.ts",
 
     "./src/main.ts",
   ]

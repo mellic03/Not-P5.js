@@ -48,6 +48,28 @@ function rect(x:number, y:number, w:number, h:number) {
     }
 }
 
+function square(x:number, y:number, w:number, r:number = 0) {
+    if (rect_mode == 'CORNER') {
+        ctx.beginPath();
+        ctx.moveTo(x+r, y);
+        ctx.arcTo(x+w, y,   x+w, y+w, r);
+        ctx.arcTo(x+w, y+w, x,   y+w, r);
+        ctx.arcTo(x,   y+w, x,   y,   r);
+        ctx.arcTo(x,   y,   x+w, y,   r);
+        ctx.stroke();
+    }
+    else if (rect_mode == 'CENTER') {
+        ctx.beginPath();
+        ctx.moveTo(x-w/2+r, y-w/2);
+        ctx.arcTo(x-w/2+w, y-w/2,   x-w/2+w, y-w/2+w, r);
+        ctx.arcTo(x-w/2+w, y-w/2+w, x-w/2,   y-w/2+w, r);
+        ctx.arcTo(x-w/2,   y-w/2+w, x-w/2,   y-w/2,   r);
+        ctx.arcTo(x-w/2,   y-w/2,   x-w/2+w, y-w/2,   r);
+        ctx.fill();
+        ctx.stroke();
+    }
+}
+
 /**
  * Draws a circle at position x, y with radius r.
  * @param {number} x - x coordinate.
@@ -58,7 +80,7 @@ function circle(x:number, y:number, r:number) {
     if (!no_fill && !no_stroke) {
         if (ellipse_mode == "CENTER") {
             ctx.beginPath();
-            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            ctx.arc(x, y, r/2, 0, 2 * Math.PI);
             ctx.fill();
             ctx.stroke();
         }
@@ -66,14 +88,39 @@ function circle(x:number, y:number, r:number) {
     else if (no_fill && !no_stroke) {
         if (ellipse_mode == "CENTER") {
             ctx.beginPath();
-            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            ctx.arc(x, y, r/2, 0, 2 * Math.PI);
             ctx.stroke();
         }
     }
     else if (!no_fill && no_stroke) {
         if (ellipse_mode == "CENTER") {
             ctx.beginPath();
-            ctx.arc(x, y, r, 0, 2 * Math.PI);
+            ctx.arc(x, y, r/2, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+    }
+}
+
+function ellipse(x:number, y:number, w:number, h:number = w) {
+    if (!no_fill && !no_stroke) {
+        if (ellipse_mode == "CENTER") {
+            ctx.beginPath();
+            ctx.ellipse(x, y, w/2, h/2, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+        }
+    }
+    else if (no_fill && !no_stroke) {
+        if (ellipse_mode == "CENTER") {
+            ctx.beginPath();
+            ctx.ellipse(x, y, w/2, h/2, 0, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+    }
+    else if (!no_fill && no_stroke) {
+        if (ellipse_mode == "CENTER") {
+            ctx.beginPath();
+            ctx.ellipse(x, y, w/2, h/2, 0, 0, 2 * Math.PI);
             ctx.fill();
         }
     }
@@ -94,10 +141,19 @@ function line(x1:number, y1:number, x2:number, y2:number) {
     ctx.stroke();
 }
 
+function triangle(x1:number, y1:number, x2:number, y2:number, x3:number, y3:number) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x3, y3);
+    ctx.lineTo(x1, y1);
+    ctx.stroke();
+}
+
 // SHAPE CONFIGURATIONS
 
 function rectMode(mode:string) {
-    if (mode == 'CORNER' || mode == 'CORNERS' || mode == 'CENTER') {
+    if (mode == CORNER || mode == CORNERS || mode == CENTER) {
         rect_mode = mode;
     }
     else {
@@ -113,3 +169,4 @@ function ellipseMode(mode:string) {
         console.log(mode + " is not a valid value for ellipseMode()");
     }
 }
+

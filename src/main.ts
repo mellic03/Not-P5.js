@@ -1,45 +1,34 @@
-let width:number;
-let height:number;
-
-let canvas;
-let ctx:CanvasRenderingContext2D;
-
-
-// Shapes
-let rect_mode:string = 'CORNER';
-let ellipse_mode:string = 'CENTER';
-
-
-// Color
-let stroke_color:Array<number> = [0, 0, 0, 1];
-let stroke_weight:number = 1;
-
-let no_stroke:boolean = false;
-
-let fill_color:Array<number> = [0, 0, 0, 1];
-
-let no_fill:boolean = false;
-
-
 function createCanvas(w:number, h:number) {
     canvas = document.getElementById("canvas")
     ctx =  canvas.getContext('2d');
 
     width = canvas.width = w;
     height = canvas.height = h;
+
+    // Set default values.
+
+    ctx.fillStyle = fill_color;
+    ctx.strokeStyle = stroke_color;
+    ctx.lineWidth = stroke_weight;
 }
 
 let draw:Function;
 let setup:Function;
 
-
 // Execute setup function
 setup();
 
-// Draw function
-function gameLoop() {
+function renderLoop() {
+    
+    // Draw
     draw();
-    window.requestAnimationFrame(gameLoop);
+    
+    // Reset translation.
+    translate(-translated_x, -translated_y);
+
+    setTimeout( function() {
+        window.requestAnimationFrame( renderLoop );
+    }, 1000 / frame_rate );
 }
 
-window.requestAnimationFrame(gameLoop);
+window.requestAnimationFrame(renderLoop);
