@@ -32,6 +32,7 @@ const CORNERS = 'CORNERS';
 const rect_modes = [CENTER, CORNER, CORNERS];
 let rect_mode:string = CORNER;
 
+// ellipse_mode
 const ellipse_modes = [CENTER]
 let ellipse_mode:string = CENTER;
 
@@ -50,5 +51,11 @@ const DEGREES = 'DEGREES';
 const RADIANS = 'RADIANS';
 const angle_modes = [DEGREES, RADIANS];
 let angle_mode:string = RADIANS; // Defualt angleMode is RADIANS.
+
+// Number changed by angleMode().
+// In RADIANS mode it will be = 1.
+// Angles are multiplied by this when doing trig functions.
+let deg_to_rad:number = 1;
+let rad_to_deg:number = 1;
 
 const PI = Math.PI;

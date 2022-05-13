@@ -23,6 +23,7 @@ var CORNER = 'CORNER';
 var CORNERS = 'CORNERS';
 var rect_modes = [CENTER, CORNER, CORNERS];
 var rect_mode = CORNER;
+// ellipse_mode
 var ellipse_modes = [CENTER];
 var ellipse_mode = CENTER;
 // Color
@@ -36,6 +37,11 @@ var DEGREES = 'DEGREES';
 var RADIANS = 'RADIANS';
 var angle_modes = [DEGREES, RADIANS];
 var angle_mode = RADIANS; // Defualt angleMode is RADIANS.
+// Number changed by angleMode().
+// In RADIANS mode it will be = 1.
+// Angles are multiplied by this when doing trig functions.
+var deg_to_rad = 1;
+var rad_to_deg = 1;
 var PI = Math.PI;
 // SHAPE GEOMETRIES
 function arc(x, y, width, height, start, end, counterclockwise) {
@@ -421,6 +427,18 @@ function sqrt(x) {
     return (Math.sqrt(x));
 }
 function sin(angle) {
+    return (Math.sin(angle * deg_to_rad));
+}
+function cos(angle) {
+    return (Math.cos(angle * deg_to_rad));
+}
+function tan(angle) {
+    return (Math.tan(angle * deg_to_rad));
+}
+function atan2(x, y) {
+    return (Math.atan2(x, y) * rad_to_deg);
+}
+function sinb(angle) {
     if (angle_mode == RADIANS) {
         return (Math.sin(angle));
     }
@@ -428,7 +446,7 @@ function sin(angle) {
         return (Math.sin(angle * (PI / 180)));
     }
 }
-function cos(angle) {
+function cosb(angle) {
     if (angle_mode == RADIANS) {
         return (Math.cos(angle));
     }
@@ -436,7 +454,7 @@ function cos(angle) {
         return (Math.cos(angle * (PI / 180)));
     }
 }
-function tan(angle) {
+function tanb(angle) {
     if (angle_mode == RADIANS) {
         return (Math.tan(angle));
     }
@@ -444,7 +462,7 @@ function tan(angle) {
         return (Math.tan(angle * (PI / 180)));
     }
 }
-function atan2(x, y) {
+function atan2b(x, y) {
     if (angle_mode == RADIANS) {
         return (Math.atan2(x, y));
     }
@@ -453,8 +471,15 @@ function atan2(x, y) {
     }
 }
 function angleMode(mode) {
-    var i = angle_modes === null || angle_modes === void 0 ? void 0 : angle_modes.indexOf(mode);
-    angle_mode = angle_modes[i];
+    angle_mode = mode;
+    if (mode == DEGREES) {
+        deg_to_rad = (PI / 180);
+        rad_to_deg = (180 / PI);
+    }
+    else if (mode == RADIANS) {
+        deg_to_rad = 1;
+        rad_to_deg = 1;
+    }
 }
 function frameRate(rate) {
     frame_rate = rate;

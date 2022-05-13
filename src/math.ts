@@ -34,45 +34,31 @@ function sqrt(x:number) {
 }
 
 function sin(angle:number) {
-    if (angle_mode == RADIANS) {
-        return(Math.sin(angle));
-    }
-    else if (angle_mode == DEGREES) {
-        return(Math.sin(angle * (PI/180)));
-    }
+    return(Math.sin(angle * deg_to_rad));
 }
 
-
 function cos(angle:number) {
-    if (angle_mode == RADIANS) {
-        return(Math.cos(angle));
-    }
-    else if (angle_mode == DEGREES) {
-        return(Math.cos(angle * (PI/180)));
-    }
+    return(Math.cos(angle * deg_to_rad));
 }
 
 function tan(angle:number) {
-    if (angle_mode == RADIANS) {
-        return(Math.tan(angle));
-    }
-    else if (angle_mode == DEGREES) {
-        return(Math.tan(angle * (PI/180)));
-    }
+    return(Math.tan(angle * deg_to_rad));
 }
 
 function atan2(x:number, y:number) {
-    if (angle_mode == RADIANS) {
-        return(Math.atan2(x, y));
-    }
-    else if (angle_mode == DEGREES) {
-        return(Math.atan2(x, y) * (180/PI));
-    }
+    return(Math.atan2(x, y) * rad_to_deg);
 }
 
 function angleMode(mode) {
-    let i:number = angle_modes?.indexOf(mode)
-    angle_mode = angle_modes[i];
+    angle_mode = mode;
+    if (mode == DEGREES) {
+        deg_to_rad = (PI/180);
+        rad_to_deg = (180/PI);
+    }
+    else if (mode == RADIANS) {
+        deg_to_rad = 1;
+        rad_to_deg = 1;
+    }
 }
 
 function frameRate(rate:number) {
