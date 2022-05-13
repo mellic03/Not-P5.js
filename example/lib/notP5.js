@@ -23,7 +23,8 @@ var CORNER = 'CORNER';
 var CORNERS = 'CORNERS';
 var rect_modes = [CENTER, CORNER, CORNERS];
 var rect_mode = CORNER;
-var ellipse_mode = 'CENTER';
+var ellipse_modes = [CENTER];
+var ellipse_mode = CENTER;
 // Color
 var stroke_color = "rgba(0, 0, 0, 1)";
 var stroke_weight = 1;
@@ -39,11 +40,14 @@ var PI = Math.PI;
 // SHAPE GEOMETRIES
 function arc(x, y, width, height, start, end, counterclockwise) {
     if (counterclockwise === void 0) { counterclockwise = false; }
+    if (no_fill && no_stroke) {
+        return (0);
+    }
+    beginShape();
     height = height / 2;
     width = width / 2;
     translate(x, y);
     ctx.scale(1, height / width);
-    ctx.beginPath();
     ctx.moveTo(0, 0);
     if (angle_mode == RADIANS) {
         ctx.arc(0, 0, width, start, end);
@@ -51,19 +55,9 @@ function arc(x, y, width, height, start, end, counterclockwise) {
     else if (angle_mode == DEGREES) {
         ctx.arc(0, 0, width, start * (PI / 180), end * (PI / 180));
     }
-    ctx.closePath();
-    if (!no_fill && !no_stroke) {
-        ctx.fill();
-        ctx.stroke();
-    }
-    else if (no_fill && !no_stroke) {
-        ctx.stroke();
-    }
-    else if (!no_fill && no_stroke) {
-        ctx.fill();
-    }
     ctx.scale(1, width / height);
     translate(-x, -y);
+    endShape();
 }
 /**
  * Draws a rectangle at position x, y with width w and height h.
@@ -74,7 +68,10 @@ function arc(x, y, width, height, start, end, counterclockwise) {
  * @returns {void} nothing
  */
 function rect(x, y, w, h) {
-    ctx.beginPath();
+    if (no_fill && no_stroke) {
+        return (0);
+    }
+    beginShape();
     if (rect_mode == "CORNER") {
         ctx.moveTo(x, y);
         ctx.lineTo(x + w, y);
@@ -93,17 +90,7 @@ function rect(x, y, w, h) {
         ctx.lineTo(w, h);
         ctx.lineTo(x, h);
     }
-    ctx.closePath();
-    if (!no_fill && !no_stroke) {
-        ctx.fill();
-        ctx.stroke();
-    }
-    else if (no_fill && !no_stroke) {
-        ctx.stroke();
-    }
-    else if (!no_fill && no_stroke) {
-        ctx.fill();
-    }
+    endShape();
 }
 /**
  * Draws a square at position x, y with width w and border radius r.
@@ -115,44 +102,39 @@ function rect(x, y, w, h) {
  */
 function square(x, y, w, r) {
     if (r === void 0) { r = 0; }
+    // If both no_fill and no_stroke, shape is invisible so don't draw.
+    if (no_fill && no_stroke) {
+        return (0);
+    }
+    beginShape();
     if (rect_mode == 'CORNER') {
-        ctx.beginPath();
         ctx.moveTo(x + r, y);
         ctx.arcTo(x + w, y, x + w, y + w, r);
         ctx.arcTo(x + w, y + w, x, y + w, r);
         ctx.arcTo(x, y + w, x, y, r);
         ctx.arcTo(x, y, x + w, y, r);
-        ctx.stroke();
     }
     else if (rect_mode == 'CENTER') {
-        ctx.beginPath();
         ctx.moveTo(x - w / 2 + r, y - w / 2);
         ctx.arcTo(x - w / 2 + w, y - w / 2, x - w / 2 + w, y - w / 2 + w, r);
         ctx.arcTo(x - w / 2 + w, y - w / 2 + w, x - w / 2, y - w / 2 + w, r);
         ctx.arcTo(x - w / 2, y - w / 2 + w, x - w / 2, y - w / 2, r);
         ctx.arcTo(x - w / 2, y - w / 2, x - w / 2 + w, y - w / 2, r);
-        ctx.fill();
-        ctx.stroke();
     }
+    endShape();
 }
 function quad(x1, y1, x2, y2, x3, y3, x4, y4) {
-    ctx.beginPath();
+    // If both no_fill and no_stroke, shape is invisible so don't draw.
+    if (no_fill && no_stroke) {
+        return (0);
+    }
+    beginShape();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.lineTo(x3, y3);
     ctx.lineTo(x4, y4);
     ctx.lineTo(x1, y1);
-    ctx.closePath;
-    if (!no_fill && !no_stroke) {
-        ctx.stroke();
-        ctx.fill();
-    }
-    else if (no_fill && !no_stroke) {
-        ctx.stroke();
-    }
-    else if (!no_fill && no_stroke) {
-        ctx.fill();
-    }
+    endShape();
 }
 /**
  * Draws a circle at position x, y with radius r.
@@ -161,53 +143,36 @@ function quad(x1, y1, x2, y2, x3, y3, x4, y4) {
  * @param {number} r - radius.
  */
 function circle(x, y, r) {
-    if (!no_fill && !no_stroke) {
-        if (ellipse_mode == "CENTER") {
-            ctx.beginPath();
-            ctx.arc(x, y, r / 2, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.stroke();
-        }
+    // If both no_fill and no_stroke, shape is invisible so don't draw.
+    if (no_fill && no_stroke) {
+        return (0);
     }
-    else if (no_fill && !no_stroke) {
-        if (ellipse_mode == "CENTER") {
-            ctx.beginPath();
-            ctx.arc(x, y, r / 2, 0, 2 * Math.PI);
-            ctx.stroke();
-        }
+    beginShape();
+    if (ellipse_mode == "CENTER") {
+        ctx.arc(x, y, r / 2, 0, 2 * Math.PI);
     }
-    else if (!no_fill && no_stroke) {
-        if (ellipse_mode == "CENTER") {
-            ctx.beginPath();
-            ctx.arc(x, y, r / 2, 0, 2 * Math.PI);
-            ctx.fill();
-        }
+    else if (ellipse_mode == "CENTER") {
+        ctx.arc(x, y, r / 2, 0, 2 * Math.PI);
     }
+    else if (ellipse_mode == "CENTER") {
+        ctx.arc(x, y, r / 2, 0, 2 * Math.PI);
+    }
+    endShape();
 }
 function ellipse(x, y, w, h) {
     if (h === void 0) { h = w; }
-    if (!no_fill && !no_stroke) {
-        if (ellipse_mode == "CENTER") {
-            ctx.beginPath();
-            ctx.ellipse(x, y, w / 2, h / 2, 0, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.stroke();
-        }
+    beginShape();
+    if (ellipse_mode == "CENTER") {
+        ctx.beginPath();
+        ctx.ellipse(x, y, w / 2, h / 2, 0, 0, 2 * Math.PI);
     }
-    else if (no_fill && !no_stroke) {
-        if (ellipse_mode == "CENTER") {
-            ctx.beginPath();
-            ctx.ellipse(x, y, w / 2, h / 2, 0, 0, 2 * Math.PI);
-            ctx.stroke();
-        }
+    else if (ellipse_mode == "CENTER") {
+        ctx.ellipse(x, y, w / 2, h / 2, 0, 0, 2 * Math.PI);
     }
-    else if (!no_fill && no_stroke) {
-        if (ellipse_mode == "CENTER") {
-            ctx.beginPath();
-            ctx.ellipse(x, y, w / 2, h / 2, 0, 0, 2 * Math.PI);
-            ctx.fill();
-        }
+    else if (ellipse_mode == "CENTER") {
+        ctx.ellipse(x, y, w / 2, h / 2, 0, 0, 2 * Math.PI);
     }
+    endShape();
 }
 /**
  * Draws a line between (x1, y1) and (x2, y2).
@@ -218,31 +183,22 @@ function ellipse(x, y, w, h) {
  * @returns {void} undefined
  */
 function line(x1, y1, x2, y2) {
-    ctx.beginPath();
+    beginShape();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
-    ctx.stroke();
+    endShape;
 }
 function triangle(x1, y1, x2, y2, x3, y3) {
-    ctx.beginPath();
+    beginShape();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.lineTo(x3, y3);
     ctx.lineTo(x1, y1);
-    if (!no_fill && !no_stroke) {
-        ctx.fill();
-        ctx.stroke();
-    }
-    else if (no_fill && !no_stroke) {
-        ctx.stroke();
-    }
-    else if (!no_fill && no_stroke) {
-        ctx.fill();
-    }
+    endShape();
 }
 // SHAPE CONFIGURATIONS
 function rectMode(mode) {
-    if (mode == CORNER || mode == CORNERS || mode == CENTER) {
+    if (mode in rect_modes) {
         rect_mode = mode;
     }
     else {
@@ -250,11 +206,27 @@ function rectMode(mode) {
     }
 }
 function ellipseMode(mode) {
-    if (mode == 'CENTER' || mode == 'CORNER') {
-        rect_mode = mode;
+    if (mode in ellipse_modes) {
+        ellipse_mode = mode;
     }
     else {
         console.log(mode + " is not a valid value for ellipseMode()");
+    }
+}
+function beginShape() {
+    ctx.beginPath();
+}
+function endShape() {
+    ctx.closePath();
+    if (!no_fill && !no_stroke) {
+        ctx.stroke();
+        ctx.fill();
+    }
+    else if (no_fill && !no_stroke) {
+        ctx.stroke();
+    }
+    else if (!no_fill && no_stroke) {
+        ctx.fill();
     }
 }
 /**
@@ -298,6 +270,9 @@ function stroke(r, g, b, a) {
     if (g === void 0) { g = r; }
     if (b === void 0) { b = r; }
     if (a === void 0) { a = 255; }
+    if (typeof r === "string") {
+        ctx.strokeStyle = r;
+    }
     no_stroke = false;
     // Set global stroke color
     stroke_color = "rgba(".concat(r, ", ").concat(g, ", ").concat(b, ", ").concat(a, ")");

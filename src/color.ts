@@ -35,6 +35,10 @@ function noFill() {
 }
 
 function stroke(r:number = 0, g:number = r, b:number = r, a:number = 255) {
+    if (typeof r === "string") {
+        ctx.strokeStyle = r;
+    }
+
     no_stroke = false;
     // Set global stroke color
     stroke_color = `rgba(${r}, ${g}, ${b}, ${a})`;

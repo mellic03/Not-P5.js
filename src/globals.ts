@@ -32,7 +32,8 @@ const CORNERS = 'CORNERS';
 const rect_modes = [CENTER, CORNER, CORNERS];
 let rect_mode:string = CORNER;
 
-let ellipse_mode:string = 'CENTER';
+const ellipse_modes = [CENTER]
+let ellipse_mode:string = CENTER;
 
 // Color
 let stroke_color:string = `rgba(0, 0, 0, 1)`;
