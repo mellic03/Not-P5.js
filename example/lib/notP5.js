@@ -13,6 +13,9 @@ var translated_y = 0;
 // Keep track of how much the user has rotated the canvas.
 // Rotate by negative this amount at the end of the loop.
 var rotated = 0;
+// Mouse position
+var mouseX = 0;
+var mouseY = 0;
 // Text
 var current_font_size = 20;
 var current_font = "Arial";
@@ -302,6 +305,9 @@ var Vector = /** @class */ (function () {
         y = y;
         z = z;
     }
+    Vector.prototype.toString = function () {
+        return ("[" + this.x.toString() + ", " + this.y.toString() + ", " + this.z.toString() + "]");
+    };
     /** Set a vectors x, y and z coordinates
      *
      * @returns nothing
@@ -388,6 +394,10 @@ var Vector = /** @class */ (function () {
      * @returns vector
      */
     Vector.prototype.dot = function (vect) {
+    };
+    Vector.prototype.cross = function () {
+    };
+    Vector.prototype.dist = function () {
     };
     return Vector;
 }());
@@ -495,6 +505,11 @@ function createCanvas(w, h) {
     ctx = canvas.getContext('2d');
     width = canvas.width = w;
     height = canvas.height = h;
+    // Track mouse position.
+    document.addEventListener('mousemove', function (event) {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    });
     // Set default values.
     ctx.fillStyle = fill_color;
     ctx.strokeStyle = stroke_color;

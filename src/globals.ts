@@ -18,6 +18,11 @@ let translated_y:number = 0;
 // Rotate by negative this amount at the end of the loop.
 let rotated:number = 0;
 
+// Mouse position
+let mouseX:number = 0;
+let mouseY:number = 0;
+
+
 // Text
 let current_font_size:number = 20;
 let current_font:string = "Arial";

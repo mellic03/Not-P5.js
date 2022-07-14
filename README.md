@@ -20,7 +20,7 @@ tsc
 ## Current Development
 The following features are currently being developed:
 - [ ] Vector methods
-    - [ ] toString()
+    - [x] toString()
     - [x] set()
     - [x] copy()
     - [x] add()

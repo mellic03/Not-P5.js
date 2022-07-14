@@ -5,6 +5,10 @@ class Vector {
         z = z;
     }
 
+    toString() {
+        return("[" + this.x.toString() + ", " + this.y.toString() + ", " + this.z.toString() + "]");
+    }
+
     /** Set a vectors x, y and z coordinates
      * 
      * @returns nothing

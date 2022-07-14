@@ -5,8 +5,13 @@ function createCanvas(w:number, h:number) {
     width = canvas.width = w;
     height = canvas.height = h;
 
-    // Set default values.
+    // Track mouse position.
+    document.addEventListener('mousemove', (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+    });
 
+    // Set default values.
     ctx.fillStyle = fill_color;
     ctx.strokeStyle = stroke_color;
     ctx.lineWidth = stroke_weight;
