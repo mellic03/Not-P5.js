@@ -176,7 +176,7 @@ function line(x1:number, y1:number, x2:number, y2:number) {
     beginShape();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
-    endShape
+    endShape();
 }
 
 function triangle(x1:number, y1:number, x2:number, y2:number, x3:number, y3:number) {
@@ -195,7 +195,7 @@ function triangle(x1:number, y1:number, x2:number, y2:number, x3:number, y3:numb
 // SHAPE CONFIGURATIONS
 
 function rectMode(mode:string) {
-    if (mode in rect_modes) {
+    if (mode == CORNER || mode == CORNERS || mode == CENTER) {
         rect_mode = mode;
     }
     else {
@@ -204,7 +204,7 @@ function rectMode(mode:string) {
 }
 
 function ellipseMode(mode:string) {
-    if (mode in ellipse_modes) {
+    if (mode == CENTER || mode == CORNER || mode == CORNERS) {
         ellipse_mode = mode;
     }
     else {

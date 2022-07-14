@@ -3,11 +3,6 @@
  * @param min
  * @param max
  * 
- * ```ts
- * console.log(isInlineTag('{@link}'));
- * console.log(isInlineTag('@internal'));
- * ```
- * 
  * @returns float 
  */
 

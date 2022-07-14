@@ -17,6 +17,38 @@ npm install tsc
 tsc
 ```
 
+## Current Development
+The following features are currently being developed:
+- [ ] Vector methods
+    - [ ] toString()
+    - [x] set()
+    - [x] copy()
+    - [x] add()
+    - [ ] rem()
+    - [x] sub()
+    - [x] mult()
+    - [x] div()
+    - [x] mag()
+    - [x] magSq()
+    - [ ] dot()
+    - [ ] cross()
+    - [ ] dist()
+    - [ ] normalize()
+    - [ ] limit()
+    - [ ] setMag()
+    - [ ] heading()
+    - [ ] setHeading()
+    - [ ] rotate()
+    - [ ] angleBetween()
+    - [ ] lerp()
+    - [ ] reflect()
+    - [ ] array()
+    - [ ] equals()
+    - [ ] fromAngle()
+    - [ ] fromAngles()
+    - [ ] random2D()
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

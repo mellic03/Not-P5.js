@@ -24,7 +24,7 @@ var CORNERS = 'CORNERS';
 var rect_modes = [CENTER, CORNER, CORNERS];
 var rect_mode = CORNER;
 // ellipse_mode
-var ellipse_modes = [CENTER];
+var ellipse_modes = [CENTER, CORNER, CORNERS];
 var ellipse_mode = CENTER;
 // Color
 var stroke_color = "rgba(0, 0, 0, 1)";
@@ -192,7 +192,7 @@ function line(x1, y1, x2, y2) {
     beginShape();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
-    endShape;
+    endShape();
 }
 function triangle(x1, y1, x2, y2, x3, y3) {
     beginShape();
@@ -204,7 +204,7 @@ function triangle(x1, y1, x2, y2, x3, y3) {
 }
 // SHAPE CONFIGURATIONS
 function rectMode(mode) {
-    if (mode in rect_modes) {
+    if (mode == CORNER || mode == CORNERS || mode == CENTER) {
         rect_mode = mode;
     }
     else {
@@ -212,7 +212,7 @@ function rectMode(mode) {
     }
 }
 function ellipseMode(mode) {
-    if (mode in ellipse_modes) {
+    if (mode == CENTER || mode == CORNER || mode == CORNERS) {
         ellipse_mode = mode;
     }
     else {
@@ -402,11 +402,6 @@ function createVector(x, y, z) {
  * @param min
  * @param max
  *
- * ```ts
- * console.log(isInlineTag('{@link}'));
- * console.log(isInlineTag('@internal'));
- * ```
- *
  * @returns float
  */
 function random(min, max) {
@@ -437,38 +432,6 @@ function tan(angle) {
 }
 function atan2(x, y) {
     return (Math.atan2(x, y) * rad_to_deg);
-}
-function sinb(angle) {
-    if (angle_mode == RADIANS) {
-        return (Math.sin(angle));
-    }
-    else if (angle_mode == DEGREES) {
-        return (Math.sin(angle * (PI / 180)));
-    }
-}
-function cosb(angle) {
-    if (angle_mode == RADIANS) {
-        return (Math.cos(angle));
-    }
-    else if (angle_mode == DEGREES) {
-        return (Math.cos(angle * (PI / 180)));
-    }
-}
-function tanb(angle) {
-    if (angle_mode == RADIANS) {
-        return (Math.tan(angle));
-    }
-    else if (angle_mode == DEGREES) {
-        return (Math.tan(angle * (PI / 180)));
-    }
-}
-function atan2b(x, y) {
-    if (angle_mode == RADIANS) {
-        return (Math.atan2(x, y));
-    }
-    else if (angle_mode == DEGREES) {
-        return (Math.atan2(x, y) * (180 / PI));
-    }
 }
 function angleMode(mode) {
     angle_mode = mode;

@@ -27,7 +27,6 @@ function fill(r:number, g:number = r, b:number = r, a = 255) {
         fill_color = `rgba(${r}, ${g}, ${b}, ${a})`;
         ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a / 255})`;
     }
-
 }
 
 function noFill() {

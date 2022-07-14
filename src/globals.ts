@@ -29,11 +29,12 @@ let current_font:string = "Arial";
 const CENTER = 'CENTER';
 const CORNER = 'CORNER';
 const CORNERS = 'CORNERS';
+
 const rect_modes = [CENTER, CORNER, CORNERS];
 let rect_mode:string = CORNER;
 
 // ellipse_mode
-const ellipse_modes = [CENTER]
+const ellipse_modes = [CENTER, CORNER, CORNERS];
 let ellipse_mode:string = CENTER;
 
 // Color

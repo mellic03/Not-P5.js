@@ -18,7 +18,6 @@ function textSize(size:number) {
     ctx.font = `${size}px ${current_font}`
 }
 
-
 /** Shift the canvas
  * 
  * @param x amount to shift the canvas in the x direction
@@ -30,7 +29,6 @@ function translate(x:number, y:number) {
     translated_y += y;
     ctx.translate(x, y);
 }
-
 
 /** Rotate the canvas
  * 

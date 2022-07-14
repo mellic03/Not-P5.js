@@ -20,7 +20,7 @@ class Vector {
      * 
      * @returns Vector
      */
-     copy(vect:Vector) {
+    copy(vect:Vector) {
         return (vect);
     }
 
@@ -94,6 +94,14 @@ class Vector {
      * @returns vector
      */
     dot(vect:Vector) {
+        
+    }
+
+    cross() {
+
+    }
+
+    dist() {
         
     }
 
