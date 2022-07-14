@@ -8,8 +8,8 @@
     "./src/globals.ts",
     "./src/shapes.ts",
     "./src/color.ts",
-    "./src/vector.ts",
-    "./src/math.ts",
+    "./src/math/vector.ts",
+    "./src/math/math.ts",
     "./src/canvas.ts",
 
     "./src/main.ts",
