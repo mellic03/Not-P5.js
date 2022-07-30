@@ -394,10 +394,52 @@ var Vector = /** @class */ (function () {
      * @returns vector
      */
     Vector.prototype.dot = function (vect) {
+        return (this.mag() * vect.mag() * cos(this.angleBetween(vect)));
     };
     Vector.prototype.cross = function () {
     };
     Vector.prototype.dist = function () {
+    };
+    /** Return the counter-clockwise angle of the vector from the x-axis.
+     * @returns number;
+     */
+    Vector.prototype.getAngle = function (vect) {
+        var angle = atan(vect.y / vect.x);
+        console.log(angle);
+        switch (true) {
+            case (vect.x == 0 && vect.y > 0):
+                angle = PI / 2;
+                break;
+            case (vect.x == 0 && vect.y < 0):
+                angle = (3 * PI) / 2;
+                break;
+            case (vect.x < 0 && vect.y == 0):
+                angle = PI;
+                break;
+            case (vect.x > 0 && vect.y == 0):
+                angle = 0;
+                break;
+            case (vect.x < 0 && vect.y > 0):
+                angle = PI - abs(angle);
+                break;
+            case (vect.x < 0 && vect.y < 0):
+                angle = (3 * PI) / 2 - abs(angle);
+                break;
+            case (vect.x > 0 && vect.y < 0):
+                angle = 2 * PI - abs(angle);
+                break;
+        }
+        return angle;
+    };
+    Vector.prototype.angleBetween = function (vect) {
+        var angle1 = this.getAngle(this);
+        var angle2 = this.getAngle(vect);
+        if (angle1 > angle2)
+            return (angle1 - angle2);
+        else if (angle2 > angle1)
+            return (angle2 - angle1);
+        else if (angle1 == angle2)
+            return (0);
     };
     return Vector;
 }());
@@ -407,6 +449,13 @@ function createVector(x, y, z) {
     if (z === void 0) { z = 0; }
     return (new Vector(x, y, z));
 }
+var abs = function (n) { return Math.abs(n); };
+var sqrt = function (n) { return Math.sqrt(n); };
+var sin = function (a) { return Math.sin(a * deg_to_rad); };
+var cos = function (a) { return Math.cos(a * deg_to_rad); };
+var tan = function (a) { return Math.tan(a * deg_to_rad); };
+var atan = function (a) { return Math.atan(a * deg_to_rad); };
+var atan2 = function (x, y) { return Math.atan2(x, y) * deg_to_rad; };
 /** Returns a random float between min and max
  *
  * @param min
@@ -416,32 +465,14 @@ function createVector(x, y, z) {
  */
 function random(min, max) {
     // If no arguments, return float between 0 and 1 exclusive of 1.
-    if (min == undefined) {
+    if (min == undefined)
         return (Math.random());
-    }
     // If one argument, return float between 0 and the argument.
-    else if (max == undefined) {
+    else if (max == undefined)
         return (Math.random() * min);
-    }
     // If two arguments, return float between the first and second.
-    else {
+    else
         return (Math.random() * (max - min) + min);
-    }
-}
-function sqrt(x) {
-    return (Math.sqrt(x));
-}
-function sin(angle) {
-    return (Math.sin(angle * deg_to_rad));
-}
-function cos(angle) {
-    return (Math.cos(angle * deg_to_rad));
-}
-function tan(angle) {
-    return (Math.tan(angle * deg_to_rad));
-}
-function atan2(x, y) {
-    return (Math.atan2(x, y) * rad_to_deg);
 }
 function angleMode(mode) {
     angle_mode = mode;
@@ -454,9 +485,7 @@ function angleMode(mode) {
         rad_to_deg = 1;
     }
 }
-function frameRate(rate) {
-    frame_rate = rate;
-}
+var frameRate = function (rate) { return frame_rate = rate; };
 /***
  *
  * @param txt string
